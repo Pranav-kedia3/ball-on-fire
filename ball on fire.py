@@ -78,23 +78,24 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         
-        # Throw ball on Space Bar and adjust trajectory
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE and not is_thrown:
-                is_thrown = True
-                ball_vx = launch_power_x
-                ball_vy = launch_power_y
-            
-            # Adjust Trajectory Logic
-            if not is_thrown:
-                if event.key == pygame.K_UP:
-                    launch_power_y -= 0.5  # More upward force (more negative)
-                if event.key == pygame.K_DOWN:
-                    launch_power_y += 0.5  # Less upward force
-                if event.key == pygame.K_RIGHT:
-                    launch_power_x += 0.5  # More forward force
-                if event.key == pygame.K_LEFT:
-                    launch_power_x -= 0.5  # Less forward force
+        # Throw ball on Space Bar
+    # Throw ball on Space Bar
+    if event.type == pygame.KEYDOWN:
+        if event.key == pygame.K_SPACE and not is_thrown:
+            is_thrown = True
+            ball_vx = launch_power_x
+            ball_vy = launch_power_y
+        
+        # Adjust Trajectory Logic
+        if not is_thrown:
+            if event.key == pygame.K_UP:
+                launch_power_y -= 1  # More upward force (more negative)
+            if event.key == pygame.K_DOWN:
+                launch_power_y += 1  # Less upward force
+            if event.key == pygame.K_RIGHT:
+                launch_power_x += 1  # More forward force
+            if event.key == pygame.K_LEFT:
+                launch_power_x -= 1  # Less forward force
 
     # B. Update Logic
     

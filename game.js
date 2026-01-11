@@ -7,9 +7,9 @@ const { Engine, Render, Runner, World, Bodies, Body, Events, Composite } = Matte
 const config = {
     width: 1000,
     height: 700,
-    gravity: 0.8,
+    gravity: 1.0, // Realistic gravity
     basketSpeed: 2,
-    launchPower: 18, // Constant power
+    launchPower: 25, // Constant power
     minAngle: 0,
     maxAngle: 360,
     trajectoryPoints: 30
@@ -50,9 +50,10 @@ const render = Render.create({
 // Create Game Objects
 function createBall() {
     const ball = Bodies.circle(100, config.height - 100, 20, {
-        restitution: 0.7,
-        friction: 0.05,
-        density: 0.04,
+        restitution: 0.65, // Slightly less bouncy for realism
+        friction: 0.1,
+        density: 0.001, // More realistic basketball density
+        frictionAir: 0.01, // Air resistance
         render: {
             fillStyle: '#ff6b35',
             strokeStyle: '#ff4500',
@@ -394,6 +395,21 @@ function gameLoop() {
 
 // Keyboard Controls
 document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+        // Reset everything except best score - like starting a new game
+        gameState.score = 0;
+        gameState.shots = 0;
+        gameState.streak = 0;
+
+        // Reset the ball to starting position
+        if (gameState.isThrown) {
+            resetBall();
+        }
+
+        updateUI();
+        return;
+    }
+
     if (gameState.isThrown) return;
 
     switch (e.key) {
