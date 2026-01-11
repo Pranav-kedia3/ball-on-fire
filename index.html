@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basketball Pro - Realistic Physics Game</title>
+    <meta name="description"
+        content="Professional basketball shooting game with realistic physics and stunning visuals">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="game-container">
+        <!-- Header UI -->
+        <div class="header-ui">
+            <div class="score-panel">
+                <div class="score-item">
+                    <span class="label">Score</span>
+                    <span class="value" id="score">0</span>
+                </div>
+                <div class="score-item">
+                    <span class="label">Shots</span>
+                    <span class="value" id="shots">0</span>
+                </div>
+                <div class="score-item">
+                    <span class="label">Streak</span>
+                    <span class="value streak-value" id="streak">0</span>
+                </div>
+                <div class="score-item">
+                    <span class="label">Best</span>
+                    <span class="value" id="best">0</span>
+                </div>
+            </div>
+            <div class="fire-indicator" id="fireIndicator">
+                <span class="fire-icon">🔥</span>
+                <span class="fire-text">ON FIRE!</span>
+                <span class="fire-icon">🔥</span>
+            </div>
+        </div>
+
+        <!-- Game Canvas -->
+        <canvas id="gameCanvas"></canvas>
+
+        <!-- Trajectory Controls -->
+        <div class="controls-panel" id="controlsPanel">
+            <div class="control-section">
+                <div class="control-label">Aim Control</div>
+                <div class="control-info">
+                    <div class="control-item">
+                        <kbd>↑</kbd><kbd>→</kbd> Rotate CW
+                    </div>
+                    <div class="control-item">
+                        <kbd>↓</kbd><kbd>←</kbd> Rotate CCW
+                    </div>
+                    <div class="control-item">
+                        <kbd>Space</kbd> Shoot
+                    </div>
+                </div>
+            </div>
+            <div class="power-meters">
+                <div class="meter">
+                    <span class="meter-label">Angle</span>
+                    <div class="meter-bar">
+                        <div class="meter-fill" id="angleMeter"></div>
+                    </div>
+                    <span class="meter-value" id="angleValue">315°</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Particle Container -->
+        <div id="particles"></div>
+    </div>
+
+    <!-- Matter.js Physics Engine -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+    <script src="game.js"></script>
+</body>
+
+</html>
