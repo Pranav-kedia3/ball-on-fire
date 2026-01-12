@@ -9,7 +9,6 @@ const config = {
     height: 700,
     gravity: 1.0, // Realistic gravity
     basketSpeed: 2,
-    launchPower: 25, // Constant power
     minAngle: 0,
     maxAngle: 360,
     trajectoryPoints: 30
@@ -23,6 +22,7 @@ let gameState = {
     bestScore: 0,
     isThrown: false,
     launchAngle: 315, // Start at 45 degrees up-right (360 - 45)
+    launchPower: 25, // Initial power (0-100)
     basketDirection: 1,
     ball: null,
     basket: null,
@@ -239,8 +239,8 @@ function shootBall() {
     if (gameState.isThrown) return;
 
     const angleRad = (gameState.launchAngle * Math.PI) / 180;
-    const vx = Math.cos(angleRad) * config.launchPower;
-    const vy = Math.sin(angleRad) * config.launchPower;
+    const vx = Math.cos(angleRad) * gameState.launchPower;
+    const vy = Math.sin(angleRad) * gameState.launchPower;
 
     Body.setVelocity(gameState.ball, { x: vx, y: vy });
     gameState.isThrown = true;
@@ -290,8 +290,8 @@ function drawTrajectory(ctx) {
     let x = 100;
     let y = config.height - 100;
     const angleRad = (gameState.launchAngle * Math.PI) / 180;
-    let vx = Math.cos(angleRad) * config.launchPower;
-    let vy = Math.sin(angleRad) * config.launchPower;
+    let vx = Math.cos(angleRad) * gameState.launchPower;
+    let vy = Math.sin(angleRad) * gameState.launchPower;
 
     ctx.moveTo(x, y);
 
@@ -355,9 +355,13 @@ function updateUI() {
 
     // Update angle meter and display
     const anglePercent = (gameState.launchAngle / 360) * 100;
-
     document.getElementById('angleMeter').style.width = anglePercent + '%';
     document.getElementById('angleValue').textContent = Math.round(gameState.launchAngle) + '°';
+
+    // Update power meter and display
+    const powerPercent = (gameState.launchPower / 100) * 100;
+    document.getElementById('powerMeter').style.width = powerPercent + '%';
+    document.getElementById('powerValue').textContent = Math.round(gameState.launchPower);
 }
 
 // Game Loop
@@ -414,13 +418,19 @@ document.addEventListener('keydown', (e) => {
 
     switch (e.key) {
         case 'ArrowUp':
-        case 'ArrowRight':
             gameState.launchAngle = (gameState.launchAngle + 2) % 360;
             updateUI();
             break;
         case 'ArrowDown':
-        case 'ArrowLeft':
             gameState.launchAngle = (gameState.launchAngle - 2 + 360) % 360;
+            updateUI();
+            break;
+        case 'ArrowRight':
+            gameState.launchPower = Math.min(100, gameState.launchPower + 2);
+            updateUI();
+            break;
+        case 'ArrowLeft':
+            gameState.launchPower = Math.max(0, gameState.launchPower - 2);
             updateUI();
             break;
         case ' ':
