@@ -30,13 +30,19 @@ The game now features **infinite gameplay** with automatic ball reset:
 
 ### Web Version (Recommended):
 ```bash
-python3 -m http.server 8000
+python3 -m http.server 8000 --bind localhost
+```
+```powershell
+py -m http.server 8000 --bind localhost
 ```
 Then open: http://localhost:8000
 
 ### Python Version:
 ```bash
 python3 "ball on fire.py"
+```
+```powershell
+py "ball on fire.py"
 ```
 
 ## 📊 Accuracy Tracking
